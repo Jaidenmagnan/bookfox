@@ -1,10 +1,7 @@
-import { getMostPopular } from "../services/googlebooks"
+import {BookList} from "@/Components/BookList"
 
 export default async function Home() {
-  const data = await getMostPopular();
-  console.log(data)
   return (
-    <div>this is the home page</div>
-
+    <BookList/>
   );
 }

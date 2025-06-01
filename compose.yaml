@@ -1,0 +1,9 @@
+services:
+  drizzle-mysql:
+    image: mysql
+    container_name: drizzle-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    restart: unless-stopped

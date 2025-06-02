@@ -1,17 +1,23 @@
 import { int, mysqlTable, varchar, timestamp } from 'drizzle-orm/mysql-core';
 import {relations} from 'drizzle-orm';
 
-export const usersTable = mysqlTable('users_table', {
-  id: int('id').primaryKey().autoincrement(),
-  name: varchar('name', { length: 255 }).notNull(),
-  age: int('age').notNull(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
+export const usersTable = mysqlTable("users_table", {
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).unique(),
+  emailVerified: timestamp("emailVerified", {
+    mode: "date",
+    fsp: 3,
+  }),
+  image: varchar("image", { length: 255 }),
   createdAt: timestamp('created_at').defaultNow(),
-});
+})
 
 export const bookshelvesTable = mysqlTable('bookshelves_table', {
     id: int('id').primaryKey().autoincrement(),
-    userId: int('user_id').references( () => usersTable.id),
+    userId: varchar('user_id', {length: 255}).references( () => usersTable.id, { onDelete: 'cascade' }),
     name: varchar('name', { length: 255}).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
 })
@@ -23,7 +29,7 @@ export const booksTable = mysqlTable('books_table', {
 
 export const bookshelvesToBooksTable = mysqlTable('bookshelves_to_books_table', {
   id: int('id').primaryKey().autoincrement(),
-  bookshelfId: int('bookshelf_id').references(() => bookshelvesTable.id),
+  bookshelfId: int('bookshelf_id').references(() => bookshelvesTable.id, { onDelete: 'cascade' }),
   bookId: int('book_id').references(() => booksTable.id),
   addedAt: timestamp('added_at').defaultNow(),
 });

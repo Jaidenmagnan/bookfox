@@ -1,7 +1,11 @@
 import {BookList} from "@/Components/BookList"
+import SignIn from "@/Components/SignIn"
 
 export default async function Home() {
   return (
-    <BookList/>
+    <div>
+      <SignIn/>
+      <BookList/>
+    </div>
   );
 }

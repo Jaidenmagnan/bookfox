@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.9.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.1",
     "mysql2": "^3.14.1",
     "next": "15.3.3",
+    "next-auth": "^5.0.0-beta.28",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

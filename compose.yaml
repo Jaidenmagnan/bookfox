@@ -4,6 +4,13 @@ services:
     container_name: drizzle-mysql
     environment:
       MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: bookfox
     ports:
       - "3306:3306"
     restart: unless-stopped
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

@@ -1,9 +1,10 @@
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import {db} from "@/db/index"
+import NextAuth from "next-auth";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/db/index";
+import authConfig from "@/auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
-  providers: [GitHub],
-})
+  session: { strategy: "jwt" },
+  ...authConfig,
+});

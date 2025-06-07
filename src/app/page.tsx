@@ -1,11 +1,11 @@
-import {BookList} from "@/Components/BookList"
-import SignIn from "@/Components/SignIn"
+import { BookList } from "@/Components/BookList"
+import SignOut from "@/Components/SignOut";
 
 export default async function Home() {
   return (
     <div>
-      <SignIn/>
-      <BookList/>
+      <SignOut />
+      <BookList />
     </div>
   );
 }

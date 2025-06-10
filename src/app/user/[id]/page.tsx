@@ -1,16 +1,20 @@
 import { db } from '@//db/index';
 import { users } from '@//db/schema';
 import { eq } from 'drizzle-orm';
+import { AddBookshelf } from "@/Components/AddBookshelf"
 
 type UserProfileProps = {
+
     params: {
         id: string;
     };
 }
+
 export default async function UserProfile({ params }: UserProfileProps) {
     const user = await db.select().from(users).where(eq(users.id, params.id)).then((res) => res[0]);
     return (
         <div>
+            <AddBookshelf userId={params.id} />
             <h1>User Profile</h1>
             <p>This is the user profile page.</p>
             {user && (

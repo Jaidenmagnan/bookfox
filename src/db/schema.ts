@@ -7,7 +7,6 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 import type { AdapterAccountType } from "next-auth/adapters";
-import { sql } from "drizzle-orm";
 
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 })
@@ -55,3 +54,24 @@ export const sessions = mysqlTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
+
+export const bookshelves = mysqlTable("bookshelf", {
+  id: varchar("id", { length: 255 })
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: varchar("userId", { length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: varchar("name", { length: 255 }).notNull(),
+});
+
+export const bookshelfBooks = mysqlTable(
+  "bookshelf_book",
+  {
+    bookshelfId: varchar("bookshelfId", { length: 255 })
+      .notNull()
+      .references(() => bookshelves.id, { onDelete: "cascade" }),
+    googleBooksId: varchar("googleBooksId", { length: 255 }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.bookshelfId, t.googleBooksId] })]
+);

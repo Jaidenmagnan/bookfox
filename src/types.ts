@@ -7,3 +7,13 @@ export interface Book {
 export interface BooksResponse {
   items: Book[];
 }
+export interface BookshelfBook {
+  bookshelfId: string;
+  googleBooksId: string;
+}
+
+export interface Bookshelf {
+  id: string;
+  userId: string;
+  name: string;
+}
